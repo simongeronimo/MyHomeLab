@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: wireguard
 resources:
   - ../../base/wireguard/
+  - cloudflare.yaml
