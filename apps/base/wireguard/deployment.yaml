@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wireguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wireguard
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      containers:
+        - name: wireguard
+          image: 'linuxserver/wireguard'
+          env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "Etc/EST"
+          ports:
+            - containerPort: 51820
+          volumeMounts:
+            - mountPath: /config
+              name: wireguard-config
+      volumes:
+        - name: wireguard-config
+          persistentVolumeClaim:
+            claimName: wireguard-config-pvc
