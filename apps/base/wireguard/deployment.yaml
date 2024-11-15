@@ -1,9 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations: 
+    meta.helm.sh/release-name: wireguard
+  labels:
   name: wireguard
+  namespace: default
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: wireguard
@@ -13,21 +16,53 @@ spec:
         app: wireguard
     spec:
       containers:
-        - name: wireguard
-          image: 'linuxserver/wireguard'
-          env:
-          - name: PUID
-            value: "1000"
-          - name: PGID
-            value: "1000"
-          - name: TZ
-            value: "Etc/EST"
-          ports:
-            - containerPort: 51820
-          volumeMounts:
-            - mountPath: /config
-              name: wireguard-config
+      - env:
+        - name: TZ
+          value: EST
+        - name: PEERS
+          value: user1,user2
+        - name: PUID
+          value: '1000'
+        - name: PGID
+          value: '1000'
+        - name: ALLOWEDIPS
+          value: 0.0.0.0/0
+        - name: SERVERPORT
+          value: 51820
+        - name: SERVERURL
+          value: vpn.simongeronimo.com 
+        image: linuxserver/wireguard:latest
+        name: wireguard
+        ports:
+        - containerPort: 51820
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - SYS_MODULE
+          privileged: true
+        volumeMounts:
+        - mountPath: "/config/"
+          name: wireguard-config
+      imagePullSecrets:
+      - name: docker-registry
+      initContainers:
+      - command:
+        - sh
+        - "-c"
+        - ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed "s/ENI/$ENI/g"
+          /etc/wireguard-secret/wg0.conf.template > /config/wg0.conf; chmod 400 /config/wg0.conf
+        - sysctl -w net.ipv4.ip_forward=1
+        image: busybox
+        name: wireguard-template-replacement
+        volumeMounts:
+        - mountPath: "/config/"
+          name: wireguard-config
+        - mountPath: "/etc/wireguard-secret/"
+          name: wireguard-secret
       volumes:
-        - name: wireguard-config
-          persistentVolumeClaim:
-            claimName: wireguard-config-pvc
+      - emptyDir: {}
+        name: wireguard-config
+      - name: wireguard-secret
+        secret:
+          secretName: wireguard
