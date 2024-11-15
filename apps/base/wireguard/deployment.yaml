@@ -18,7 +18,7 @@ spec:
       containers:
       - env:
         - name: TZ
-          value: EST
+          value: 'America/New_York'
         - name: PEERS
           value: user1,user2
         - name: PUID
@@ -28,9 +28,9 @@ spec:
         - name: ALLOWEDIPS
           value: 0.0.0.0/0
         - name: SERVERPORT
-          value: 51820
+          value: '51820'
         - name: SERVERURL
-          value: vpn.simongeronimo.com 
+          value: 'vpn.simongeronimo.com'
         image: linuxserver/wireguard:latest
         name: wireguard
         ports:
