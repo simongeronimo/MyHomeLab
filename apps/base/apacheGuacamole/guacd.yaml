@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guacd
+  template:
+    metadata:
+      labels:
+        app: guacd
+    spec:
+      containers:
+      - name: guacd
+        image: linuxserver/guacd:latest
+        volumeMounts:
+        - name: drive
+          mountPath: /drive
+        - name: record
+          mountPath: /record
+      volumes:
+      - name: drive
+        hostPath:
+          path: /guacamole/drive
+      - name: record
+        hostPath:
+          path: /guacamole/record

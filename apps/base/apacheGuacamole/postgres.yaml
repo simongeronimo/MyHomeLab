@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13.4
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/guacamole
+        - name: POSTGRES_DB
+          value: guacamole_db
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        volumeMounts:
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d
+        - name: data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: init
+        hostPath:
+          path: /guacamole/init
+      - name: data
+        hostPath:
+          path: /guacamole/data
