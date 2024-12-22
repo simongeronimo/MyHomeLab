@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - mongoDBOperator.yaml
   - ./rbac/
+  - manager.yaml
