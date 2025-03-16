@@ -4,4 +4,4 @@ namespace: actual-budget
 resources:
   - ../../base/actualBudget/
   - cloudflare.yaml
-  - cloudflate-secret.yaml
+  - cloudflare-secret.yaml
