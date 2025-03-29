@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:latest
+          envFrom:
+            - configMapRef:
+                name: ghost-config
+          env:
+            - name: database__connection__password
+              valueFrom:
+                secretKeyRef:
+                  name: password
+                  key: password
+          securityContext:
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 2368
+          volumeMounts:
+            - name: ghost-data
+              mountPath: /etc/ghost/data
+      volumes:
+        - name: ghost-data
+          persistentVolumeClaim:
+            claimName: ghost-data-pvc

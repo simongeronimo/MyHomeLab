@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - storage.yaml
+  - configmap.yaml
+  - sql-deployment.yaml
+  - sql-service.yaml
+  - sql-storage.yaml
+  - password-secret.yaml

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ghost-config
+data:
+  database__client: "mysql"
+  database__connection__host: "mysql-service"
+  database__connection__user: "root"
+  database__connection__database: "ghost"
+  url: "http://localhost:2368"
