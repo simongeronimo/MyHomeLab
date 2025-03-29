@@ -15,6 +15,9 @@ spec:
       containers:
         - name: ghost
           image: ghost:latest
+          envFrom:
+            - configMapRef:
+                name: ghost-config
           securityContext:
             allowPrivilegeEscalation: false
           ports:
