@@ -24,6 +24,11 @@ spec:
                 secretKeyRef:
                   name: password
                   key: password
+            - name: mail__options__auth__pass
+              valueFrom:
+                secretKeyRef:
+                  name: password
+                  key: mail_password
           securityContext:
             allowPrivilegeEscalation: false
           ports:
