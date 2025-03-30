@@ -9,6 +9,6 @@ data:
   database__connection__database: "ghost"
   url: "https://simongeronimo.com"
   mail__transport: "SMTP"
-  mail__options__host: "smtp.example.com"
+  mail__options__host: "smtp.mailgun.org"
   mail__options__port: "587"
   mail__options__auth__user: "noreply@simongeronimo.com"
