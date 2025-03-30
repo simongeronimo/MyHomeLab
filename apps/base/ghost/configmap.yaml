@@ -7,4 +7,4 @@ data:
   database__connection__host: "mysql-service"
   database__connection__user: "root"
   database__connection__database: "ghost"
-  url: "http://simongeronimo.com"
+  url: "https://simongeronimo.com"
