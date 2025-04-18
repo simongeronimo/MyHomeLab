@@ -15,18 +15,15 @@ spec:
       containers:
         - name: registry
           image: registry:2
+          env:
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
           ports:
             - containerPort: 5000
           volumeMounts:
             - name: registry-data
               mountPath: /var/lib/registry
-            - name: registry-config
-              mountPath: /etc/docker/registry/config.yml
-              subPath: config.yml
       volumes:
         - name: registry-data
           persistentVolumeClaim:
             claimName: registry-data-pvc
-        - name: registry-config
-          configMap:
-            name: registry-config

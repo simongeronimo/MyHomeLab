@@ -5,4 +5,3 @@ resources:
   - deployment.yaml
   - storage.yaml
   - service.yaml
-  - registry-config.yaml
