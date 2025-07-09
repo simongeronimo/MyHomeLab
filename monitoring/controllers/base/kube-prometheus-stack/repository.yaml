@@ -1,4 +1,4 @@
-ApiVersion: source.toolkit.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1
 Kind: HelmRepository
 Metadata:
   name: kube-prometheus-stack
