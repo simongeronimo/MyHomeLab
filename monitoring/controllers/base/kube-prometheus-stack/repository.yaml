@@ -1,6 +1,6 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-Kind: HelmRepository
-Metadata:
+kind: HelmRepository
+metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
