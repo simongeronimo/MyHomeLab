@@ -28,3 +28,8 @@ spec:
   values:
     grafana:
       adminPassword: mischa
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        hosts: 
+          - monitor.simongeronimo.com
