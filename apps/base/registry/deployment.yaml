@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: registry
-          image: registry:2
+          image: registry:3
           env:
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: "true"
