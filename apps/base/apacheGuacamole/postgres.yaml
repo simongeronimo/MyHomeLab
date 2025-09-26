@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres:17.5
+        image: postgres:18.0
         env:
         - name: PGDATA
           value: /var/lib/postgresql/data/guacamole
